@@ -9,16 +9,14 @@ public class Fixture {
     public static void resetH2TableIds(JdbcTemplate jdbcTemplate) {
         jdbcTemplate.execute((Connection connection) -> {
             try (Statement statement = connection.createStatement()) {
-                statement.execute("SET REFERENTIAL_INTEGRITY FALSE");
-                statement.execute("TRUNCATE TABLE reservation");
-                statement.execute("ALTER TABLE reservation ALTER COLUMN id RESTART WITH 1");
-                statement.execute("TRUNCATE TABLE member");
-                statement.execute("ALTER TABLE member ALTER COLUMN id RESTART WITH 1");
-                statement.execute("TRUNCATE TABLE yoga_session");
-                statement.execute("ALTER TABLE yoga_session ALTER COLUMN id RESTART WITH 1");
-                statement.execute("TRUNCATE TABLE yoga_course");
-                statement.execute("ALTER TABLE yoga_course ALTER COLUMN id RESTART WITH 1");
-                statement.execute("SET REFERENTIAL_INTEGRITY TRUE");
+                statement.execute("DELETE FROM reservation");
+                statement.execute("ALTER TABLE reservation AUTO_INCREMENT = 1");
+                statement.execute("DELETE FROM member");
+                statement.execute("ALTER TABLE member AUTO_INCREMENT = 1");
+                statement.execute("DELETE FROM yoga_session");
+                statement.execute("ALTER TABLE yoga_session AUTO_INCREMENT = 1");
+                statement.execute("DELETE FROM yoga_course");
+                statement.execute("ALTER TABLE yoga_course AUTO_INCREMENT = 1");
             }
             return null;
         });
